@@ -17,7 +17,7 @@ export class BibtexParserService {
    * and return an array of Paper objects.
    * @param {string} bibData
    */
-  parse(bibData: string) {
+  parse(bibData: string): Array<Paper> {
 
     const papers: Array<Paper> = new Array<Paper>();
 
@@ -57,7 +57,10 @@ export class BibtexParserService {
     // Sometimes, getFieldAsString() will return a string even when it is a number.
     if (field != null) {
       if (typeof field === 'string') {
-        return Number.parseInt(<string>(field));
+        const numVal: number = Number.parseInt(<string>(field));
+        if (!Number.isNaN(numVal)) {
+          return numVal;
+        }
       } else if (typeof field === 'number') {
         return <number>(field);
       }
