@@ -1,0 +1,12 @@
+<table>
+  <tr *ngFor="let paper of papers">
+    <td>
+      <b>Author:</b>   {{paper.authors != null ? paper.authors.join(' | ') : ''}}<br/>
+      <b>Title:</b>    {{paper.title}}<br/>
+      <b>Year:</b>     {{paper.year}}<br/>
+      <b>Journal:</b>  {{paper.journal}}<br/>
+      <b>Url:</b>      {{paper.url}}<br/>
+      <b>Abstract:</b> {{paper.abstract}}<br/>
+    </td>
+  </tr>
+</table>
