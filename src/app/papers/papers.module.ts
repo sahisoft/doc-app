@@ -3,7 +3,7 @@ import { BrowserModule} from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { PapersComponent } from './papers.component';
-import { BibtexParserService } from './services/bibtex-parser.service';
+import { BibtexPaperLoaderService } from './services/bibtex-paper-loader.service';
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import { BibtexParserService } from './services/bibtex-parser.service';
     HttpClientModule
   ],
   declarations: [PapersComponent],
-  providers: [BibtexParserService],
+  providers: [BibtexPaperLoaderService],
   bootstrap: [PapersComponent]
 })
 export class PapersModule { }
