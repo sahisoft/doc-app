@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Paper } from './objects/paper';
 import { BibtexPaperLoaderService } from './services/bibtex-paper-loader.service';
+import { MscLookupService } from './services/msc-lookup.service';
 
 @Component({
   selector: 'app-papers',
@@ -16,11 +17,12 @@ export class PapersComponent implements OnInit {
   papers: Array<Paper>;
 
   constructor(
-      private _paperLoaderService: BibtexPaperLoaderService) { }
+      public paperLoaderService: BibtexPaperLoaderService,
+      public mscLookupService: MscLookupService) { }
 
   ngOnInit() {
     // Load papers.
-    this._paperLoaderService.loadPapers().subscribe(
+    this.paperLoaderService.loadPapers().subscribe(
       papers => {
         this.papers = papers;
       }

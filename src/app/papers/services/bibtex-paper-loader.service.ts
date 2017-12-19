@@ -32,17 +32,22 @@ export class BibtexPaperLoaderService {
     parseBibFile(bibData).entries_raw.forEach((bibEntry: BibEntry) => {
 
       // Extract fields that will be interested in.
-      const authors: string[] = this.nullSafeSplit(
+      const authors: Array<string> = this.nullSafeSplit(
         this.extractStringField(bibEntry, 'author'), ' and ');
-      const title: string     = this.extractStringField(bibEntry,  'title');
-      const year: number      = this.extractNumericField(bibEntry, 'year');
-      const journal: string   = this.extractStringField(bibEntry,  'fjournal')
+      const title: string          = this.extractStringField(bibEntry,  'title');
+      const year: number           = this.extractNumericField(bibEntry, 'year');
+      const journal: string        = this.extractStringField(bibEntry,  'fjournal')
         || this.extractStringField(bibEntry,  'journal');
-      const url: string       = this.extractStringField(bibEntry,  'url');
-      const abstract: string  = this.extractStringField(bibEntry,  'abstract');
+      const mrclass: Array<string> = this.nullSafeSplit(
+        this.nullSafeStrip(
+          this.extractStringField(bibEntry, 'mrclass'), new RegExp('\\(|\\)', 'g'),
+        ), ' '
+      );
+      const url: string            = this.extractStringField(bibEntry,  'url');
+      const abstract: string       = this.extractStringField(bibEntry,  'abstract');
 
       // Make a paper!
-      papers.push(new Paper(authors, title, year, journal, url, abstract));
+      papers.push(new Paper(authors, title, year, journal, mrclass, url, abstract));
     });
 
     return papers;
@@ -78,10 +83,18 @@ export class BibtexPaperLoaderService {
   }
 
   /**
+   * Strip out undesired characters from a string.
+   * Handles the fact that the string may be null.
+   */
+  static nullSafeStrip(toStrip: string, stripSet: string | RegExp): string {
+    return (toStrip != null) ? toStrip.replace(stripSet, '') : null;
+  }
+
+  /**
    * Takes a potentially null input string, and splits it on the given delimiter.
    * If the input string is null, null is returned rather than crashing.
    */
-  static nullSafeSplit(toSplit: string, delim: string): string[] {
+  static nullSafeSplit(toSplit: string, delim: string | RegExp): Array<string> {
     return (toSplit != null) ? toSplit.split(delim) : null;
   }
 

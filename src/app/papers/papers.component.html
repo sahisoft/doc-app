@@ -1,12 +1,49 @@
 <table>
   <tr *ngFor="let paper of papers">
     <td>
-      <b>Author:</b>   {{paper.authors != null ? paper.authors.join(' | ') : ''}}<br/>
-      <b>Title:</b>    {{paper.title}}<br/>
-      <b>Year:</b>     {{paper.year}}<br/>
-      <b>Journal:</b>  {{paper.journal}}<br/>
-      <b>Url:</b>      {{paper.url}}<br/>
-      <b>Abstract:</b> {{paper.abstract}}<br/>
+      <div>
+      <b>Authors:</b>
+      <ul *ngIf="paper.authors">
+        <li *ngFor="let author of paper.authors">
+          <span>{{author}}</span>
+        </li>
+      </ul>
+      </div>
+
+      <div>
+        <b>Title:</b><br/>
+        <span>{{paper.title}}</span>
+      </div><br/>
+
+      <div>
+        <b>Year:</b><br/>
+        <span>{{paper.year}}</span>
+      </div><br/>
+
+      <div>
+        <b>Journal:</b><br/>
+        <span>{{paper.journal}}</span>
+      </div><br/>
+
+      <div>
+        <b>Classifications:</b><br/>
+        <ul *ngIf="paper.mrclass">
+          <li *ngFor="let mrclass of paper.mrclass">
+            <span>{{mscLookupService.get(mrclass)}}</span>
+          </li>
+        </ul>
+      </div><br/>
+
+      <div>
+        <b>Url:</b><br/>
+        <span><a href="{{paper.url}}">{{paper.url}}</a></span>
+      </div><br/>
+
+      <div>
+        <b>Abstract:</b><br/>
+        <span>{{paper.abstract}}</span>
+      </div><br/>
+
     </td>
   </tr>
 </table>

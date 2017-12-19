@@ -68,6 +68,7 @@ describe('BibtexPaperLoaderService', () => {
             expect(papers[0].authors).toBeNull();
             expect(papers[0].abstract).toBeNull();
             expect(papers[0].journal).toBeNull();
+            expect(papers[0].mrclass).toBeNull();
             expect(papers[0].title).toBeNull();
             expect(papers[0].url).toBeNull();
             expect(papers[0].year).toBeNull();
@@ -92,6 +93,7 @@ describe('BibtexPaperLoaderService', () => {
             expect(papers[0].authors).toEqual(['']);
             expect(papers[0].abstract).toEqual('');
             expect(papers[0].journal).toEqual('');
+            expect(papers[0].mrclass).toEqual(['']);
             expect(papers[0].title).toEqual('');
             expect(papers[0].url).toEqual('');
             expect(papers[0].year).toBeNull();
@@ -103,6 +105,7 @@ describe('BibtexPaperLoaderService', () => {
           AUTHOR = {},
           Abstract = {},
           TITLe = {},
+          mrClass = {},
           JourNal = {},
           url = {},
           year = {},
@@ -124,6 +127,7 @@ describe('BibtexPaperLoaderService', () => {
             expect(papers[0].abstract).toEqual('This is my abstract');
             expect(papers[0].title).toEqual('This is my title');
             expect(papers[0].journal).toEqual('This is my journal');
+            expect(papers[0].mrclass).toEqual(['foo1', 'foo2', 'foo3']);
             expect(papers[0].url).toEqual('/papers/mypaper.pdf');
             expect(papers[0].year).toEqual(2017);
           }
@@ -134,6 +138,7 @@ describe('BibtexPaperLoaderService', () => {
         author = {John Smith and Sally Smith},
         abstract = {This is my abstract},
         title = {This is my title},
+        mrclass = {foo1 (foo2 foo3)},
         journal = {This is my journal},
         url = {/papers/mypaper.pdf},
         year = {2017},
@@ -154,6 +159,7 @@ describe('BibtexPaperLoaderService', () => {
             expect(papers[0].abstract).toEqual('This is my first abstract');
             expect(papers[0].title).toEqual('This is my first title');
             expect(papers[0].journal).toEqual('This is my first journal');
+            expect(papers[0].mrclass).toEqual(['foo1', 'foo2', 'foo3']);
             expect(papers[0].url).toEqual('/papers/mypaper1.pdf');
             expect(papers[0].year).toEqual(2017);
 
@@ -161,6 +167,7 @@ describe('BibtexPaperLoaderService', () => {
             expect(papers[1].abstract).toEqual('This is my second abstract');
             expect(papers[1].title).toEqual('This is my second title');
             expect(papers[1].journal).toEqual('This is my second journal');
+            expect(papers[1].mrclass).toEqual(['foo4', 'foo5', 'foo6']);
             expect(papers[1].url).toEqual('/papers/mypaper2.pdf');
             expect(papers[1].year).toEqual(2018);
           }
@@ -172,6 +179,7 @@ describe('BibtexPaperLoaderService', () => {
         abstract = {This is my first abstract},
         title = {This is my first title},
         journal = {This is my first journal},
+        mrclass = {foo1 foo2 (foo3)},
         url = {/papers/mypaper1.pdf},
         year = {2017},
       } @book {bar,
@@ -179,6 +187,7 @@ describe('BibtexPaperLoaderService', () => {
         abstract = {This is my second abstract},
         title = {This is my second title},
         journal = {This is my second journal},
+        mrclass = {(foo4 foo5) foo6},
         url = {/papers/mypaper2.pdf},
         year = {2018},
       }`);

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { PapersComponent } from './papers.component';
 import { BibtexPaperLoaderService } from './services/bibtex-paper-loader.service';
+import {MscLookupService} from './services/msc-lookup.service';
 
 @NgModule({
   imports: [
@@ -12,7 +13,7 @@ import { BibtexPaperLoaderService } from './services/bibtex-paper-loader.service
     HttpClientModule
   ],
   declarations: [PapersComponent],
-  providers: [BibtexPaperLoaderService],
+  providers: [BibtexPaperLoaderService, MscLookupService],
   bootstrap: [PapersComponent]
 })
 export class PapersModule { }
