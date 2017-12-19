@@ -27,7 +27,7 @@ export class BibtexPaperLoaderService {
    */
   static parse(bibData: string): Array<Paper> {
 
-    const papers: Array<Paper> = new Array<Paper>();
+    const papers: Array<Paper> = [];
 
     parseBibFile(bibData).entries_raw.forEach((bibEntry: BibEntry) => {
 
@@ -87,16 +87,16 @@ export class BibtexPaperLoaderService {
 
   /**
    * Prepare a BibtexPaperLoader.
-   * @param {HttpClient} _httpClient an HttpClient to use to make the request to load paper data
+   * @param {HttpClient} httpClient an HttpClient to use to make the request to load paper data
    */
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   /**
    * Load the data from the given URL.
    * @return papers!
    */
   public loadPapers(): Observable<Array<Paper>> {
-    return this._httpClient.request('GET', BibtexPaperLoaderService.PAPER_URL, {responseType: 'text'})
+    return this.httpClient.request('GET', BibtexPaperLoaderService.PAPER_URL, {responseType: 'text'})
       .map(data => BibtexPaperLoaderService.parse(data));
   }
 }
