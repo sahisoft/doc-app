@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { parseBibFile, BibEntry } from 'bibtex';
+import * as bibtexParse from 'bibtex-parser-js';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -29,22 +29,30 @@ export class BibtexPaperLoaderService {
 
     const papers: Array<Paper> = [];
 
-    parseBibFile(bibData).entries_raw.forEach((bibEntry: BibEntry) => {
+    bibtexParse.toJSON(bibData).forEach(entry => {
 
-      // Extract fields that will be interested in.
+      // No point in proceeding with this entry if there are no entry tags to parse.
+      if (!entry.hasOwnProperty('entryTags')) {
+        return;
+      }
+
+      const tags = entry.entryTags;
+
+      // Extract fields that we will be interested in.
       const authors: Array<string> = this.nullSafeSplit(
-        this.extractStringField(bibEntry, 'author'), ' and ');
-      const title: string          = this.extractStringField(bibEntry,  'title');
-      const year: number           = this.extractNumericField(bibEntry, 'year');
-      const journal: string        = this.extractStringField(bibEntry,  'fjournal')
-        || this.extractStringField(bibEntry,  'journal');
-      const mrclass: Array<string> = this.nullSafeSplit(
-        this.nullSafeStrip(
-          this.extractStringField(bibEntry, 'mrclass'), new RegExp('\\(|\\)', 'g'),
-        ), ' '
+        this.takeString(tags, 'AUTHOR'), ' and '
       );
-      const url: string            = this.extractStringField(bibEntry,  'url');
-      const abstract: string       = this.extractStringField(bibEntry,  'abstract');
+      const title: string          = this.takeString(tags, 'TITLE');
+      const year: number           = this.takeNumber(tags, 'YEAR');
+      const journal: string        = this.takeString(tags, 'FJOURNAL')
+                                  || this.takeString(tags, 'JOURNAL');
+      const mrclass: Array<string> = this.nullSafeSplit(
+        this.nullSafeStrip(this.takeString(tags, 'MRCLASS'),
+          new RegExp('\\(|\\)', 'g')),
+        ' '
+      );
+      const url: string            = this.takeString(tags, 'URL');
+      const abstract: string       = this.takeString(tags, 'ABSTRACT');
 
       // Make a paper!
       papers.push(new Paper(authors, title, year, journal, mrclass, url, abstract));
@@ -54,31 +62,38 @@ export class BibtexPaperLoaderService {
   }
 
   /**
-   * Extract a string field from the bibEntry.
+   * Extract a string field from the entry.
+   * If there is no such field, or it is not a string, return null.
    */
-  static extractStringField(bibEntry: BibEntry, fieldName: string): string {
-    const field = bibEntry.getFieldAsString(fieldName);
-    return (field != null) ? field.toString() : null;
+  static takeString(entry, fieldName: string): string {
+    if (entry.hasOwnProperty(fieldName)) {
+      const value = entry[fieldName];
+      if (typeof value === 'string') {
+        return value;
+      }
+    }
+
+    return null;
   }
 
   /**
-   * Extract a numeric field from the bibEntry.
+   * Extract a numeric field from the entry.
+   * If there is no such field, or it is not a number, return null.
    */
-  static extractNumericField(bibEntry: BibEntry, fieldName: string): number {
-    const field = bibEntry.getFieldAsString(fieldName);
+  static takeNumber(entry, fieldName: string): number {
 
-    // Sometimes, getFieldAsString() will return a string even when it is a number.
-    if (field != null) {
-      if (typeof field === 'string') {
-        const numVal: number = Number.parseInt(<string>(field));
-        if (!Number.isNaN(numVal)) {
-          return numVal;
+    if (entry.hasOwnProperty(fieldName)) {
+      const value = entry[fieldName];
+      if (typeof value === 'number') {
+        return value;
+      } else if (typeof value === 'string') {
+        const numValue: number = Number.parseInt(value);
+        if (!Number.isNaN(numValue)) {
+          return numValue;
         }
-      } else if (typeof field === 'number') {
-        return <number>(field);
       }
     }
-    // Otherwise - there is nothing - return null.
+
     return null;
   }
 

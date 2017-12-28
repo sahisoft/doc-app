@@ -195,6 +195,25 @@ describe('BibtexPaperLoaderService', () => {
     )
   );
 
+  it('does not strip out math symbols',
+    inject([BibtexPaperLoaderService, HttpTestingController],
+      (service: BibtexPaperLoaderService, httpMock: HttpTestingController) => {
+
+        service.loadPapers().subscribe(
+          papers => {
+            expect(papers.length).toEqual(1);
+            expect(papers[0].title).toEqual('{L}ie superalgebra $\\mathfrak{q}(n)$');
+          }
+        );
+
+        const request = httpMock.expectOne(BibtexPaperLoaderService.PAPER_URL);
+        request.flush(`@article {foo,
+          title={{L}ie superalgebra $\\mathfrak{q}(n)$}
+        }`);
+      }
+    )
+  );
+
   afterEach( inject([HttpTestingController], (httpMock: HttpTestingController) => {
     httpMock.verify();
   }));

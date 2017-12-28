@@ -12,7 +12,7 @@
 
       <div>
         <b>Title:</b><br/>
-        <span>{{paper.title}}</span>
+        <span appRenderTex="{{paper.title}}"></span>
       </div><br/>
 
       <div>
@@ -29,7 +29,7 @@
         <b>Classifications:</b><br/>
         <ul *ngIf="paper.mrclass">
           <li *ngFor="let mrclass of paper.mrclass">
-            <span>{{mscLookupService.get(mrclass)}}</span>
+            <span appRenderTex="{{mscLookupService.get(mrclass)}}"></span>
           </li>
         </ul>
       </div><br/>
@@ -41,7 +41,7 @@
 
       <div>
         <b>Abstract:</b><br/>
-        <span>{{paper.abstract}}</span>
+        <span appRenderTex="{{paper.abstract}}"></span>
       </div><br/>
 
     </td>
