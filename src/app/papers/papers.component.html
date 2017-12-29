@@ -27,11 +27,13 @@
 
       <div>
         <b>Classifications:</b><br/>
-        <ul *ngIf="paper.mrclass">
-          <li *ngFor="let mrclass of paper.mrclass">
-            <span appRenderTex="{{mscLookupService.get(mrclass)}}"></span>
-          </li>
-        </ul>
+        <ng-container *ngIf="tryMscLookups(paper.mrclass)">
+          <ul *ngFor="let mscVal of lastMscValSet">
+            <li>
+              <span appRenderTex="{{mscVal}}"></span>
+            </li>
+          </ul>
+        </ng-container>
       </div><br/>
 
       <div>
