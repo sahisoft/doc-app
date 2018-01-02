@@ -3,6 +3,8 @@ import { BrowserModule} from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
+import { MatCardModule } from '@angular/material';
+
 import { PapersComponent } from './papers.component';
 import { BibtexPaperLoaderService } from './services/bibtex-paper-loader.service';
 import { MscLookupService } from './services/msc-lookup.service';
@@ -12,7 +14,8 @@ import { RenderTexDirective } from './directives/render-tex.directive';
   imports: [
     BrowserModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule
   ],
   declarations: [
     PapersComponent,

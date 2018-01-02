@@ -1,51 +1,50 @@
-<table>
-  <tr *ngFor="let paper of papers">
-    <td>
-      <div>
-      <b>Authors:</b>
-      <ul *ngIf="paper.authors">
-        <li *ngFor="let author of paper.authors">
-          <span>{{author}}</span>
-        </li>
-      </ul>
-      </div>
+<div *ngFor="let paper of papers">
+<mat-card class="paper-card">
 
-      <div>
-        <b>Title:</b><br/>
-        <span appRenderTex="{{paper.title}}"></span>
-      </div><br/>
+  <mat-card-title class="paper-card-title">
+    <span>
+      <a *ngIf="paper.url" href="{{paper.url}}" style="text-decoration: none">
+        <img src="../../assets/icons/ic_cloud_download_white_18px.svg" />
+      </a>
+      <span appRenderTex="{{paper.title}}"></span>
+    </span>
+  </mat-card-title>
 
-      <div>
-        <b>Year:</b><br/>
-        <span>{{paper.year}}</span>
-      </div><br/>
+  <mat-card-content class="paper-card-content">
+    <div>
+    <b>Authors:</b>
+    <ul *ngIf="paper.authors">
+      <li *ngFor="let author of paper.authors">
+        <span>{{author}}</span>
+      </li>
+    </ul>
+    </div>
 
-      <div>
-        <b>Journal:</b><br/>
-        <span>{{paper.journal}}</span>
-      </div><br/>
+    <div>
+      <b>Year:</b><br/>
+      <span>{{paper.year}}</span>
+    </div><br/>
 
-      <div>
-        <b>Classifications:</b><br/>
-        <ng-container *ngIf="tryMscLookups(paper.mrclass)">
-          <ul *ngFor="let mscVal of lastMscValSet">
-            <li>
-              <span appRenderTex="{{mscVal}}"></span>
-            </li>
-          </ul>
-        </ng-container>
-      </div><br/>
+    <div>
+      <b>Journal:</b><br/>
+      <span>{{paper.journal}}</span>
+    </div><br/>
 
-      <div>
-        <b>Url:</b><br/>
-        <span><a href="{{paper.url}}">{{paper.url}}</a></span>
-      </div><br/>
+    <div>
+      <b>Classifications:</b><br/>
+      <ng-container *ngIf="tryMscLookups(paper.mrclass)">
+        <ul *ngFor="let mscVal of lastMscValSet">
+          <li>
+            <span appRenderTex="{{mscVal}}"></span>
+          </li>
+        </ul>
+      </ng-container>
+    </div><br/>
 
-      <div>
-        <b>Abstract:</b><br/>
-        <span appRenderTex="{{paper.abstract}}"></span>
-      </div><br/>
-
-    </td>
-  </tr>
-</table>
+    <div>
+      <b>Abstract:</b><br/>
+      <span appRenderTex="{{paper.abstract}}"></span>
+    </div><br/>
+  </mat-card-content>
+</mat-card><br/>
+</div>

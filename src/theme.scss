@@ -1,0 +1,23 @@
+// For math rendering
+@import '~katex/dist/katex.min.css';
+
+// Theme for material components
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+$site-app-primary: mat-palette($mat-deep-orange);
+$site-app-accent:  mat-palette($mat-lime, A200, A100, A400);
+$site-app-warn:    mat-palette($mat-red);
+$site-app-theme:   mat-dark-theme($site-app-primary, $site-app-accent, $site-app-warn);
+
+// Apply the theme to material components.
+@include angular-material-theme($site-app-theme);
+
+// Apply styling rules for the rest of the site.
+body {
+  background-color: mat-color($mat-light-blue, 900);
+}
+.mat-card-title {
+  background-color: mat-color($site-app-primary, 900);
+}
