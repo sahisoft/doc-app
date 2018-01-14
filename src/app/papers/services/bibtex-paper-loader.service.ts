@@ -52,10 +52,10 @@ export class BibtexPaperLoaderService {
         ' '
       );
       const url: string            = this.takeString(tags, 'URL');
-      const abstract: string       = this.takeString(tags, 'ABSTRACT');
+      const abstractText: string   = this.takeString(tags, 'ABSTRACT');
 
       // Make a paper!
-      papers.push(new Paper(authors, title, year, journal, mrclass, url, abstract));
+      papers.push(new Paper(authors, title, year, journal, mrclass, url, abstractText));
     });
 
     return papers;
