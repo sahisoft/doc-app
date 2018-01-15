@@ -6,9 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material';
 
 import { PapersComponent } from './papers.component';
+import { AuthorDetailRegistryService } from './services/author-detail-registry.service';
 import { BibtexPaperLoaderService } from './services/bibtex-paper-loader.service';
 import { MscLookupService } from './services/msc-lookup.service';
 import { RenderTexDirective } from './directives/render-tex.directive';
+import { RenderBylineDirective } from './directives/render-byline.directive';
 
 @NgModule({
   imports: [
@@ -19,9 +21,11 @@ import { RenderTexDirective } from './directives/render-tex.directive';
   ],
   declarations: [
     PapersComponent,
-    RenderTexDirective
+    RenderTexDirective,
+    RenderBylineDirective
   ],
   providers: [
+    AuthorDetailRegistryService,
     BibtexPaperLoaderService,
     MscLookupService
   ],

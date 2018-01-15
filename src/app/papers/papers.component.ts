@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Paper } from './objects/paper';
+import { AuthorDetailRegistryService } from './services/author-detail-registry.service';
 import { BibtexPaperLoaderService } from './services/bibtex-paper-loader.service';
 import { MscLookupService } from './services/msc-lookup.service';
 
@@ -22,6 +23,7 @@ export class PapersComponent implements OnInit {
   lastMscValSet: Set<string>;
 
   constructor(
+      public authorDetailRegistryService: AuthorDetailRegistryService,
       public paperLoaderService: BibtexPaperLoaderService,
       public mscLookupService: MscLookupService) { }
 

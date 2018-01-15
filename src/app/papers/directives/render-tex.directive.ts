@@ -7,8 +7,7 @@ import * as katex from 'katex';
 })
 export class RenderTexDirective implements OnChanges {
 
-  @Input('appRenderTex')
-  appRenderTex: string;
+  @Input() text: string;
 
   constructor(private element: ElementRef) { }
 
@@ -18,8 +17,13 @@ export class RenderTexDirective implements OnChanges {
 
   private render() {
 
+    // No text, do nothing.
+    if (!this.text) {
+      return;
+    }
+
     // Render all TeX, remove all braces, and replace inner HTML.
-    this.element.nativeElement.innerHTML = this.appRenderTex
+    this.element.nativeElement.innerHTML = this.text
       .replace(new RegExp('\\$(.*)\\$', 'g'),
         function(match: any, mathExpr: string): string {
           return katex.renderToString(mathExpr);

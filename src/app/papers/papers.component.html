@@ -6,45 +6,31 @@
       <a *ngIf="paper.url" href="{{paper.url}}" style="text-decoration: none">
         <img src="../../assets/icons/ic_cloud_download_white_18px.svg" />
       </a>
-      <span appRenderTex="{{paper.title}}"></span>
+      <span appRenderTex [text]="paper.title"></span>
     </span>
   </mat-card-title>
 
   <mat-card-content class="paper-card-content">
-    <div>
-    <b>Authors:</b>
-    <ul *ngIf="paper.authors">
-      <li *ngFor="let author of paper.authors">
-        <span>{{author}}</span>
-      </li>
-    </ul>
-    </div>
 
-    <div>
-      <b>Year:</b><br/>
-      <span>{{paper.year}}</span>
-    </div><br/>
+    <ng-container *ngIf="authorDetailRegistryService.isReady()">
+      <span appRenderByline [paper]="paper"></span><br/>
+    </ng-container>
 
-    <div>
-      <b>Journal:</b><br/>
-      <span>{{paper.journal}}</span>
-    </div><br/>
 
-    <div>
-      <b>Classifications:</b><br/>
-      <ng-container *ngIf="tryMscLookups(paper.mrclass)">
-        <ul *ngFor="let mscVal of lastMscValSet">
-          <li>
-            <span appRenderTex="{{mscVal}}"></span>
-          </li>
-        </ul>
-      </ng-container>
-    </div><br/>
+    <ng-container *ngIf="tryMscLookups(paper.mrclass)">
+      <b>Classifications:</b>
+      <ul *ngFor="let mscVal of lastMscValSet">
+        <li>
+          <span appRenderTex [text]="mscVal"></span>
+        </li>
+      </ul><br/>
+    </ng-container>
 
-    <div>
-      <b>Abstract:</b><br/>
-      <span appRenderTex="{{paper.abstractText}}"></span>
-    </div><br/>
+
+    <ng-container *ngIf="paper.abstractText">
+      <span appRenderTex [text]="paper.abstractText"></span><br/>
+    </ng-container>
+
   </mat-card-content>
 </mat-card><br/>
 </div>

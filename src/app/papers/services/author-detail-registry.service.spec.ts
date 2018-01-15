@@ -24,27 +24,27 @@ describe('AuthorDetailRegistryService', () => {
   );
 
   it('should handle bad input correctly',
-  inject([AuthorDetailRegistryService, HttpTestingController],
-    (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
+    inject([AuthorDetailRegistryService, HttpTestingController],
+      (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL)
-          .flush('badResponse');
+          httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL)
+            .flush('badResponse');
 
-        expect(service.getAuthorDetails()).toEqual([]);
-      }
-    )
+          expect(service.getAuthorDetails()).toEqual([]);
+        }
+      )
   );
 
   it('should handle empty array correctly',
-  inject([AuthorDetailRegistryService, HttpTestingController],
-    (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
+    inject([AuthorDetailRegistryService, HttpTestingController],
+      (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL)
-          .flush([]);
+          httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL)
+            .flush([]);
 
-        expect(service.getAuthorDetails()).toEqual([]);
-      }
-    )
+          expect(service.getAuthorDetails()).toEqual([]);
+        }
+      )
   );
 
   it('should handle valid single-author record correctly',

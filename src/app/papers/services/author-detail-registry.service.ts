@@ -21,6 +21,11 @@ export class AuthorDetailRegistryService {
   static readonly AUTHOR_REGISTRY_URL = '../../assets/author-registry.json';
 
   /**
+   * Whether the service is fully loaded and ready to go
+   */
+  private ready: boolean;
+
+  /**
    * Author details
    */
   private authorDetails: ReadonlyArray<AuthorDetail>;
@@ -30,8 +35,52 @@ export class AuthorDetailRegistryService {
    * This can be used for fast lookups of an AuthorDetail,
    * knowing only its citeStyle.
    */
-  private citeIndexMap: Map<String, number>;
+  private citeIndexMap: ReadonlyMap<String, number>;
 
+  /**
+   * Asynchronously load authorDetails and citeIndexMap, with data from the HTTP response.
+   */
+  private asyncInit(i_author_details: IAuthorDetail[]) {
+
+    // We maybe in trouble if we aren't getting an object back.
+    if ((typeof i_author_details) !== 'object') {
+      this.ready = true;
+      return;
+    }
+
+    // Prepare citation index map.
+    const citeIndexMap = new Map<String, number>();
+
+    // Scratch space to hold author details.
+    const authorDetails: Array<AuthorDetail> = [];
+
+    // Ensure that each author entry is well-defined.
+    // If so, save it.
+    i_author_details.forEach((i_author_detail: IAuthorDetail) => {
+
+      // Ensure the object is well-formed - all of the fields should be present.
+      if  (!i_author_detail.cite || !i_author_detail.show
+        || !i_author_detail.type || !i_author_detail.url) {
+        return;
+      }
+
+      // Make a full-fledged AuthorDetail object, using the contents of the interface.
+      const author_detail: AuthorDetail = new AuthorDetail(
+        i_author_detail.cite, i_author_detail.show, i_author_detail.type, i_author_detail.url
+      );
+
+      // Push it into the authorDetails array, save the index,
+      // and set the citation index map accordingly.
+      citeIndexMap[author_detail.citeStyle]
+        = authorDetails.push(author_detail) - 1;
+    });
+
+    // Everything is ready to go - save them!
+    this.authorDetails = authorDetails;
+    this.citeIndexMap  = citeIndexMap;
+    this.ready = true;
+
+  }
 
   /**
    * Prepare an author registry lookup service.
@@ -39,55 +88,23 @@ export class AuthorDetailRegistryService {
    */
   constructor(private httpClient: HttpClient) {
 
+    // Start with empty values while waiting for a request.
+    this.initAsEmpty();
+
     this.httpClient.request<IAuthorDetail[]>('GET', AuthorDetailRegistryService.AUTHOR_REGISTRY_URL)
       .subscribe((i_author_details: IAuthorDetail[]) => {
-
-        // We maybe in trouble if we aren't getting an object back.
-        if ((typeof i_author_details) !== 'object') {
-          this.initAsEmpty();
-          return;
-        }
-
-        // Prepare citation index map.
-        this.citeIndexMap = new Map<String, number>();
-
-        // Scratch space to hold author details.
-        const authorDetails: Array<AuthorDetail> = [];
-
-        // Ensure that each author entry is well-defined.
-        // If so, save it.
-        i_author_details.forEach((i_author_detail: IAuthorDetail) => {
-
-          // Ensure the object is well-formed - all of the fields should be present.
-          if  (!i_author_detail.cite || !i_author_detail.show
-            || !i_author_detail.type || !i_author_detail.url) {
-            return;
-          }
-
-          // Make a full-fledged AuthorDetail object, using the contents of the interface.
-          const author_detail: AuthorDetail = new AuthorDetail(
-            i_author_detail.cite, i_author_detail.show, i_author_detail.type, i_author_detail.url
-          );
-
-          // Push it into the authorDetails array, save the index,
-          // and set the citation index map accordingly.
-          this.citeIndexMap[author_detail.citeStyle]
-            = authorDetails.push(author_detail) - 1;
-        });
-
-        // authorDetails has been fully built up - save a read-only
-        // copy of it.
-        this.authorDetails = authorDetails;
+        this.asyncInit(i_author_details);
       }
     );
   }
 
   /**
-   * Bail out if bad data is received - make all data structures empty!
+   * Make all data structures empty!
    */
   private initAsEmpty() {
       this.authorDetails = [];
       this.citeIndexMap = new Map<String, number>();
+      this.ready = false;
   }
 
   /**
@@ -109,6 +126,13 @@ export class AuthorDetailRegistryService {
   getAuthorByCiteStyle(citeStyle: string): AuthorDetail {
     const index: number = this.citeIndexMap[citeStyle];
     return (typeof index !== 'undefined') ? this.authorDetails[index] : null;
+  }
+
+  /**
+   * Returns whether the service is ready for use.
+   */
+  isReady(): boolean {
+    return this.ready;
   }
 
 }
