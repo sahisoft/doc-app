@@ -1,36 +1,46 @@
-<div *ngFor="let paper of papers">
-<mat-card class="paper-card">
+<!-- High-level listing of all papers, showing only title. Each item will be linked to its respective card below. -->
+<mat-list class="paper-list">
+  <ng-container *ngFor="let paper of papers; let i = index">
+    <mat-list-item class="paper-list-item">
+      <a class="paper-list-link" href="papers#{{i}}" appRenderTex [text]="paper.title"></a>
+    </mat-list-item>
+  </ng-container>
+</mat-list><br/>
 
-  <mat-card-title class="paper-card-title">
-    <span>
-      <a *ngIf="paper.url" href="{{paper.url}}" style="text-decoration: none">
-        <img src="../../assets/icons/ic_cloud_download_white_18px.svg" />
-      </a>
-      <span appRenderTex [text]="paper.title"></span>
-    </span>
-  </mat-card-title>
+<!-- Details about each individual paper -->
+<ng-container *ngFor="let paper of papers; let i = index">
+  <mat-card class="paper-card" id="{{i}}">
 
-  <mat-card-content class="paper-card-content">
+    <mat-card-title class="paper-card-title">
+      <span>
+        <a *ngIf="paper.url" href="{{paper.url}}" style="text-decoration: none">
+          <img src="../../assets/icons/ic_cloud_download_white_18px.svg" />
+        </a>
+        <span appRenderTex [text]="paper.title"></span>
+      </span>
+    </mat-card-title>
 
-    <ng-container *ngIf="authorDetailRegistryService.isReady()">
-      <span appRenderByline [paper]="paper"></span><br/>
-    </ng-container>
+    <mat-card-content class="paper-card-content">
 
-
-    <ng-container *ngIf="tryMscLookups(paper.mrclass)">
-      <b>Classifications:</b>
-      <ul *ngFor="let mscVal of lastMscValSet">
-        <li>
-          <span appRenderTex [text]="mscVal"></span>
-        </li>
-      </ul><br/>
-    </ng-container>
+      <ng-container *ngIf="authorDetailRegistryService.isReady()">
+        <span appRenderByline [paper]="paper"></span><br/>
+      </ng-container>
 
 
-    <ng-container *ngIf="paper.abstractText">
-      <span appRenderTex [text]="paper.abstractText"></span><br/>
-    </ng-container>
+      <ng-container *ngIf="tryMscLookups(paper.mrclass)">
+        <b>Classifications:</b>
+        <ul *ngFor="let mscVal of lastMscValSet">
+          <li>
+            <span appRenderTex [text]="mscVal"></span>
+          </li>
+        </ul><br/>
+      </ng-container>
 
-  </mat-card-content>
-</mat-card><br/>
-</div>
+
+      <ng-container *ngIf="paper.abstractText">
+        <span appRenderTex [text]="paper.abstractText"></span><br/>
+      </ng-container>
+
+    </mat-card-content>
+  </mat-card><br/>
+</ng-container>

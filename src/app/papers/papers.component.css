@@ -1,3 +1,23 @@
+.paper-list {
+  margin: auto;
+  width: 50%;
+  border: 0;
+  padding: 0;
+}
+
+.paper-list-item {
+  border: 0;
+  padding: 0;
+}
+
+.paper-list-link {
+  text-decoration: none;
+}
+
+.paper-list-link:hover {
+  text-decoration: underline;
+}
+
 .paper-card {
   margin: auto;
   width: 50%;

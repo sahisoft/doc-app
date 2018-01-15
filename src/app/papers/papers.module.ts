@@ -3,7 +3,7 @@ import { BrowserModule} from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatListModule } from '@angular/material';
 
 import { PapersComponent } from './papers.component';
 import { AuthorDetailRegistryService } from './services/author-detail-registry.service';
@@ -17,7 +17,8 @@ import { RenderBylineDirective } from './directives/render-byline.directive';
     BrowserModule,
     CommonModule,
     HttpClientModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule
   ],
   declarations: [
     PapersComponent,
