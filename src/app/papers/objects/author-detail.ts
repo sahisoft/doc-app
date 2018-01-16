@@ -6,6 +6,11 @@ import { AuthorType } from '../enums/author-type.enum';
 export class AuthorDetail {
 
   /**
+   * Make author type accessible to templates.
+   */
+  public Type = AuthorType;
+
+  /**
    * The name to use to lookup this author for citations
    */
   readonly citeStyle: string;

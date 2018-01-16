@@ -1,3 +1,12 @@
+.all-content-div {
+  width: 100%;
+}
+
+.paper-div {
+  width: 70%;
+  float: left;
+}
+
 .paper-list {
   margin: auto;
   width: 50%;
@@ -38,4 +47,21 @@
 .paper-card-content {
   border: 3px;
   padding: 10px;
+}
+
+.collaborator-div {
+  width: 30%;
+  float: left;
+}
+
+.collaborator-list {
+  margin: auto;
+  width: 50%;
+  border: 0;
+  padding: 0;
+}
+
+.collaborator-list-item {
+  border: 0;
+  padding: 0;
 }
