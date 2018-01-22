@@ -30,9 +30,9 @@
           </ng-container>
 
 
-          <ng-container *ngIf="tryMscLookups(paper.mrclass)">
+          <ng-container *ngIf="tryMscLookup.try(paper.mrclass)">
             <b>Classifications:</b>
-            <ul *ngFor="let mscVal of lastMscValSet">
+            <ul *ngFor="let mscVal of tryMscLookup.get()">
               <li>
                 <span appRenderTex [text]="mscVal"></span>
               </li>
