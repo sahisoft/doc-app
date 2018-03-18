@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 import { AuthorDetail } from '../objects/author-detail';
 
@@ -23,7 +26,7 @@ export class AuthorDetailRegistryService {
   /**
    * Whether the service is fully loaded and ready to go
    */
-  private ready: boolean;
+  private ready: BehaviorSubject<boolean>;
 
   /**
    * Author details
@@ -44,7 +47,7 @@ export class AuthorDetailRegistryService {
 
     // We maybe in trouble if we aren't getting an object back.
     if ((typeof i_author_details) !== 'object') {
-      this.ready = true;
+      this.ready.next(true);
       return;
     }
 
@@ -78,7 +81,7 @@ export class AuthorDetailRegistryService {
     // Everything is ready to go - save them!
     this.authorDetails = authorDetails;
     this.citeIndexMap  = citeIndexMap;
-    this.ready = true;
+    this.ready.next(true);
 
   }
 
@@ -104,7 +107,7 @@ export class AuthorDetailRegistryService {
   private initAsEmpty() {
       this.authorDetails = [];
       this.citeIndexMap = new Map<String, number>();
-      this.ready = false;
+      this.ready = new BehaviorSubject<boolean>(false);
   }
 
   /**
@@ -131,8 +134,8 @@ export class AuthorDetailRegistryService {
   /**
    * Returns whether the service is ready for use.
    */
-  isReady(): boolean {
-    return this.ready;
+  isReady(): Observable<boolean> {
+    return this.ready.asObservable();
   }
 
 }

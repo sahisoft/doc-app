@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+
 @Injectable()
 export class MscLookupService {
 
@@ -13,6 +17,11 @@ export class MscLookupService {
    * Map of MSC code to its description.
    */
   private mscDescMap: Map<string, string>;
+
+  /**
+   * Whether the service is fully loaded and ready to go
+   */
+  private ready: BehaviorSubject<boolean>;
 
   /**
    * If a match contains both leading and trailing space, deduplicate by only returning
@@ -41,6 +50,9 @@ export class MscLookupService {
    */
   constructor(private httpClient: HttpClient) {
 
+    // Start out not ready.
+    this.ready = new BehaviorSubject<boolean>(false);
+
     this.mscDescMap = new Map<string, string>();
 
     this.httpClient.request('GET', MscLookupService.MSC_REGISTRY_URL, {responseType: 'text'})
@@ -48,6 +60,8 @@ export class MscLookupService {
         .replace(new RegExp('\\\\[^\\n]*({[^}]*})', 'g'), '') // eliminate headers
         .split(new RegExp('[\\r?\\n]+'))) // split on each remaining line
         .subscribe((mappings: Array<string>) => {
+
+          const data = new Map<string, string>();
 
           mappings.forEach((mapping: string) => {
             // First word in the line will be the key, and the remainder will be the value.
@@ -61,8 +75,12 @@ export class MscLookupService {
             const key = tokens[1];
             const val = MscLookupService.stripExtraDetails(tokens[2]);
 
-            this.mscDescMap.set(key, val);
+            data.set(key, val);
           });
+
+          // Save it all.
+          this.mscDescMap = data;
+          this.ready.next(true);
         }
       );
   }
@@ -79,6 +97,13 @@ export class MscLookupService {
    */
   public count(): number {
     return this.mscDescMap.size;
+  }
+
+  /**
+   * Returns whether the service is ready for use.
+   */
+  isReady(): Observable<boolean> {
+    return this.ready.asObservable();
   }
 
 }

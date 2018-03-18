@@ -31,7 +31,7 @@ export class TryMscLookup {
    * Will return whether the lookups were successful. If so, the results will be stored
    * in lastMscValSet for use in the template.
    */
-  try(mscKeys: Array<string>): boolean {
+  public try(mscKeys: Array<string>): boolean {
 
     // Make a new set of results.
     const lastMscValSet = new Set<string>();
@@ -72,7 +72,7 @@ export class TryMscLookup {
    * Get the last set of MSC values looked up.
    * @return last looked up set of MSC values
    */
-  get(): ReadonlySet<String> {
+  public get(): ReadonlySet<String> {
     return this.lastMscValSet;
   }
 

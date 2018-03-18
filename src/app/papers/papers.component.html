@@ -1,18 +1,44 @@
 <div class="all-content-div">
 
   <div class="paper-div">
-    <!-- High-level listing of all papers, showing only title. Each item will be linked to its respective card below. -->
+
+    <!-- Index-level view of papers by class -->
+    <mat-list class="paper-by-class-index">
+
+      <ng-container *ngIf="indexPapersByClass.isReady() | async">
+
+        <ng-container *ngFor="let description of indexPapersByClass.getSortedDescriptions()">
+          <mat-list-item class="paper-by-class-item">
+            <table>
+              <tr>
+                <td>{{ description }}</td>
+                <td>
+                  <span *ngFor="let paper of indexPapersByClass.getPapersForDescription(description)">
+                    <a class="paper-list-link" href="papers#{{paper.id}}">#{{paper.id}}</a>&nbsp;
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </mat-list-item>
+        </ng-container>
+
+      </ng-container>
+
+    </mat-list><br/>
+
+    <!-- High-level listing of all papers, showing only title.
+    Each item will be linked to its respective card below. -->
     <mat-list class="paper-list">
-      <ng-container *ngFor="let paper of papers; let i = index">
+      <ng-container *ngFor="let paper of papers">
         <mat-list-item class="paper-list-item">
-          <a class="paper-list-link" href="papers#{{i}}" appRenderTex [text]="paper.title"></a>
+          <a class="paper-list-link" href="papers#{{paper.id}}" appRenderTex [text]="paper.title"></a>
         </mat-list-item>
       </ng-container>
     </mat-list><br/>
 
     <!-- Details about each individual paper -->
-    <ng-container *ngFor="let paper of papers; let i = index">
-      <mat-card class="paper-card" id="{{i}}">
+    <ng-container *ngFor="let paper of papers">
+      <mat-card class="paper-card" id="{{paper.id}}">
 
         <mat-card-title class="paper-card-title">
           <span>
@@ -25,7 +51,7 @@
 
         <mat-card-content class="paper-card-content">
 
-          <ng-container *ngIf="authorDetailRegistryService.isReady()">
+          <ng-container *ngIf="authorDetailRegistryService.isReady() | async">
             <span appRenderByline [paper]="paper"></span><br/>
           </ng-container>
 

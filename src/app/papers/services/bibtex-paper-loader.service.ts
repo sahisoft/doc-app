@@ -29,6 +29,8 @@ export class BibtexPaperLoaderService {
 
     const papers: Array<Paper> = [];
 
+    let nextId = 0;
+
     bibtexParse.toJSON(bibData).forEach(entry => {
 
       // No point in proceeding with this entry if there are no entry tags to parse.
@@ -55,7 +57,8 @@ export class BibtexPaperLoaderService {
       const abstractText: string   = this.takeString(tags, 'ABSTRACT');
 
       // Make a paper!
-      papers.push(new Paper(authors, title, year, journal, mrclass, url, abstractText));
+      papers.push(new Paper(++nextId,
+        authors, title, year, journal, mrclass, url, abstractText));
     });
 
     return papers;

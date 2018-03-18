@@ -65,6 +65,7 @@ describe('BibtexPaperLoaderService', () => {
 
             expect(papers.length).toEqual(1);
 
+            expect(papers[0].id).toEqual(1);
             expect(papers[0].authors).toBeNull();
             expect(papers[0].abstractText).toBeNull();
             expect(papers[0].journal).toBeNull();
@@ -90,6 +91,7 @@ describe('BibtexPaperLoaderService', () => {
 
             expect(papers.length).toEqual(1);
 
+            expect(papers[0].id).toEqual(1);
             expect(papers[0].authors).toEqual(['']);
             expect(papers[0].abstractText).toEqual('');
             expect(papers[0].journal).toEqual('');
@@ -123,6 +125,7 @@ describe('BibtexPaperLoaderService', () => {
 
             expect(papers.length).toEqual(1);
 
+            expect(papers[0].id).toEqual(1);
             expect(papers[0].authors).toEqual(['John Smith', 'Sally Smith']);
             expect(papers[0].abstractText).toEqual('This is my abstract');
             expect(papers[0].title).toEqual('This is my title');
@@ -155,6 +158,7 @@ describe('BibtexPaperLoaderService', () => {
           papers => {
             expect(papers.length).toEqual(2);
 
+            expect(papers[0].id).toEqual(1);
             expect(papers[0].authors).toEqual(['John Smith', 'Sally Smith']);
             expect(papers[0].abstractText).toEqual('This is my first abstract');
             expect(papers[0].title).toEqual('This is my first title');
@@ -163,6 +167,7 @@ describe('BibtexPaperLoaderService', () => {
             expect(papers[0].url).toEqual('/papers/mypaper1.pdf');
             expect(papers[0].year).toEqual(2017);
 
+            expect(papers[1].id).toEqual(2);
             expect(papers[1].authors).toEqual(['Joe Shmoe', 'John Smith', 'Bob McDob']);
             expect(papers[1].abstractText).toEqual('This is my second abstract');
             expect(papers[1].title).toEqual('This is my second title');

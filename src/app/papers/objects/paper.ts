@@ -1,6 +1,11 @@
 export class Paper {
 
   /**
+   * Id number for this paper
+   */
+  readonly id: number;
+
+  /**
    * List of authors
    */
   readonly authors?: Array<string>;
@@ -38,6 +43,7 @@ export class Paper {
   /**
    * Create a paper.
    *
+   * @param id id for this paper
    * @param author list of authors, as an array
    * @param title the article title
    * @param year publication yearß
@@ -46,8 +52,9 @@ export class Paper {
    * @param url a URL at which the paper can be downloaded
    * @param abstractText a brief description or synopsis of the paper
    */
-  constructor(author?: string[], title?: string, year?: number, journal?: string,
+  constructor(id: number, author?: string[], title?: string, year?: number, journal?: string,
                 mrclass?: Array<string>, url?: string, abstractText?: string) {
+    this.id = id;
     this.authors = author;
     this.title = title;
     this.year = year;
