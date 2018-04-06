@@ -5,6 +5,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { AuthorDetailRegistryService } from './author-detail-registry.service';
 import { AuthorDetail } from '../objects/author-detail';
 
+import { UrlConstants } from '../utils/url-constants';
+
 describe('AuthorDetailRegistryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,12 +15,12 @@ describe('AuthorDetailRegistryService', () => {
     });
   });
 
-  it('should load ' + AuthorDetailRegistryService.AUTHOR_REGISTRY_URL + ' upon startup',
+  it('should load ' + UrlConstants.AUTHOR_REGISTRY + ' upon startup',
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
         expect(service).toBeTruthy();
-        httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL);
+        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY);
       }
     )
   );
@@ -27,7 +29,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-          httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL)
+          httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY)
             .flush('badResponse');
 
           expect(service.getAuthorDetails()).toEqual([]);
@@ -39,7 +41,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-          httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL)
+          httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY)
             .flush([]);
 
           expect(service.getAuthorDetails()).toEqual([]);
@@ -51,7 +53,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL)
+        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY)
           .flush(
             [{
               'cite': 'Smith, John',
@@ -78,7 +80,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL).
+        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY).
           flush(
             [
               {'show': 'Bad Author 1'},
@@ -112,7 +114,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL).flush(
+        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY).flush(
           [{
             'cite': 'Smith, John',
             'show': 'John Smith',
@@ -138,7 +140,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL).flush(
+        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY).flush(
           [{
             'cite': 'Smith, John',
             'show': 'John Smith',
@@ -174,7 +176,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(AuthorDetailRegistryService.AUTHOR_REGISTRY_URL).flush(
+        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY).flush(
           [{
             'cite': 'Smith, John',
             'show': 'John Smith',

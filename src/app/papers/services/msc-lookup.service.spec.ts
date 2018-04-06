@@ -3,6 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 import { MscLookupService } from './msc-lookup.service';
+import { UrlConstants } from '../utils/url-constants';
 
 describe('MscLookupService', () => {
   beforeEach(() => {
@@ -12,12 +13,12 @@ describe('MscLookupService', () => {
     });
   });
 
-  it('should load ' + MscLookupService.MSC_REGISTRY_URL + ' upon startup',
+  it('should load ' + UrlConstants.MSC_REGISTRY + ' upon startup',
     inject( [MscLookupService, HttpTestingController],
       (service: MscLookupService, httpMock: HttpTestingController) => {
 
         expect(service).toBeTruthy();
-        httpMock.expectOne(MscLookupService.MSC_REGISTRY_URL);
+        httpMock.expectOne(UrlConstants.MSC_REGISTRY);
 
       }
     )
@@ -27,7 +28,7 @@ describe('MscLookupService', () => {
     inject([MscLookupService, HttpTestingController],
       (service: MscLookupService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(MscLookupService.MSC_REGISTRY_URL)
+        httpMock.expectOne(UrlConstants.MSC_REGISTRY)
           .flush(' key1 val1 is the value');
 
         expect(service.count()).toBe(1);
@@ -40,7 +41,7 @@ describe('MscLookupService', () => {
     inject([MscLookupService, HttpTestingController],
       (service: MscLookupService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(MscLookupService.MSC_REGISTRY_URL)
+        httpMock.expectOne(UrlConstants.MSC_REGISTRY)
           .flush(`key1 val1 for me\r\nkey2  val2 for  you\n key3\t val3 for\tthem\n`);
 
         expect(service.count()).toBe(3);
@@ -55,7 +56,7 @@ describe('MscLookupService', () => {
     inject([MscLookupService, HttpTestingController],
       (service: MscLookupService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(MscLookupService.MSC_REGISTRY_URL)
+        httpMock.expectOne(UrlConstants.MSC_REGISTRY)
           .flush('key1 val1\nkey1 val2');
 
         expect(service.count()).toBe(1);
@@ -68,7 +69,7 @@ describe('MscLookupService', () => {
     inject([MscLookupService, HttpTestingController],
       (service: MscLookupService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(MscLookupService.MSC_REGISTRY_URL)
+        httpMock.expectOne(UrlConstants.MSC_REGISTRY)
           .flush('key1 val1 [with some extra1]!\nkey2 (some extra2) val2 (really) is here\nkey3 val3 (extra3)\nkey4 val4 [extra] {extra}');
 
         expect(service.count()).toBe(4);
@@ -102,7 +103,7 @@ describe('MscLookupService', () => {
         'key3 (test3) val3',
         'key4 val4');
 
-        httpMock.expectOne(MscLookupService.MSC_REGISTRY_URL)
+        httpMock.expectOne(UrlConstants.MSC_REGISTRY)
           .flush(data.join('\n'));
 
         expect(service.count()).toBe(5);
