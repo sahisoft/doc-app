@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 import { AuthorDetail } from '../objects/author-detail';
+import { UrlConstants } from '../utils/url-constants';
 
 // This is a blueprint for parsing entries within the AUTHOR_REGISTRY_URL.
 // We expect to see the fields listed below, in a valid author entry.
@@ -17,11 +18,6 @@ interface IAuthorDetail {
 
 @Injectable()
 export class AuthorDetailRegistryService {
-
-  /**
-   * Server-side location where the list of collaborators and their homepages can be found.
-   */
-  static readonly AUTHOR_REGISTRY_URL = '../../assets/author-registry.json';
 
   /**
    * Whether the service is fully loaded and ready to go
@@ -94,7 +90,7 @@ export class AuthorDetailRegistryService {
     // Start with empty values while waiting for a request.
     this.initAsEmpty();
 
-    this.httpClient.request<IAuthorDetail[]>('GET', AuthorDetailRegistryService.AUTHOR_REGISTRY_URL)
+    this.httpClient.request<IAuthorDetail[]>('GET', UrlConstants.AUTHOR_REGISTRY)
       .subscribe((i_author_details: IAuthorDetail[]) => {
         this.asyncInit(i_author_details);
       }

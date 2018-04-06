@@ -5,13 +5,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
+import { UrlConstants } from '../utils/url-constants';
+
 @Injectable()
 export class MscLookupService {
-
-  /**
-   * Server-side location where the MSC 2010 database in tex form can be found.
-   */
-  static readonly MSC_REGISTRY_URL = '../../assets/msc2010-final.txt';
 
   /**
    * Map of MSC code to its description.
@@ -55,7 +52,7 @@ export class MscLookupService {
 
     this.mscDescMap = new Map<string, string>();
 
-    this.httpClient.request('GET', MscLookupService.MSC_REGISTRY_URL, {responseType: 'text'})
+    this.httpClient.request('GET', UrlConstants.MSC_REGISTRY, {responseType: 'text'})
       .map((result: string) => result
         .replace(new RegExp('\\\\[^\\n]*({[^}]*})', 'g'), '') // eliminate headers
         .split(new RegExp('[\\r?\\n]+'))) // split on each remaining line

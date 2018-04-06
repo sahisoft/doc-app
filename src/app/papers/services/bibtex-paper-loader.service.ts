@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { Paper } from '../objects/paper';
+import { UrlConstants } from '../utils/url-constants';
 
 @Injectable()
 /**
@@ -14,11 +15,6 @@ import { Paper } from '../objects/paper';
  * as an array of Paper objects.
  */
 export class BibtexPaperLoaderService {
-
-  /**
-   * Server-side location where the paper bibliography can be found.
-   */
-  static readonly PAPER_URL = '../../assets/papers.bib';
 
   /**
    * Parse the given string of data, expected to be in bib form,
@@ -127,7 +123,7 @@ export class BibtexPaperLoaderService {
    * @return papers!
    */
   public loadPapers(): Observable<Array<Paper>> {
-    return this.httpClient.request('GET', BibtexPaperLoaderService.PAPER_URL, {responseType: 'text'})
+    return this.httpClient.request('GET', UrlConstants.PAPERS_BIB, {responseType: 'text'})
       .map(data => BibtexPaperLoaderService.parse(data));
   }
 }
