@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatToolbarModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { RoutePrepService } from './site/services/route-prep.service';
@@ -27,6 +28,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AppComponent ],
       imports: [
+        MatToolbarModule,
         RouterTestingModule.withRoutes([{path: 'papers', redirectTo: '/'}])
       ],
       providers: [

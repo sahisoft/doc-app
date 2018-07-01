@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule} from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { MatToolbarModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { RoutePrepService } from './site/services/route-prep.service';
@@ -16,6 +17,7 @@ export function RouteInitFactory(routePrepService: RoutePrepService) {
     BrowserModule,
     CommonModule,
     HttpClientModule,
+    MatToolbarModule,
     // initial route configuration for compilation to work correctly,
     // but can be overriden by the RoutePrepService!
     RouterModule.forRoot([

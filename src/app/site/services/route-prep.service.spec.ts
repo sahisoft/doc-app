@@ -52,6 +52,7 @@ describe('RoutePrepService', () => {
                 path: '',
                 loadChildren: 'app/papers/papers.module#PapersModule',
                 data: {
+                  title: 'My Papers',
                   assets: 'assets/papers'
                 }
               }
@@ -63,6 +64,7 @@ describe('RoutePrepService', () => {
           [
             {
               'url': '/',
+              'title': 'My Papers',
               'component': 'Papers',
               'assets': 'assets/papers'
             }
@@ -82,6 +84,7 @@ describe('RoutePrepService', () => {
                   path: '',
                   loadChildren: 'app/papers/papers.module#PapersModule',
                   data: {
+                    title: 'Papers 1',
                     assets: 'assets/home'
                   },
                 },
@@ -89,6 +92,7 @@ describe('RoutePrepService', () => {
                   path: 'papers',
                   loadChildren: 'app/papers/papers.module#PapersModule',
                   data: {
+                    title: 'Papers 2',
                     assets: 'assets/papers'
                   }
                 },
@@ -96,6 +100,7 @@ describe('RoutePrepService', () => {
                   path: 'more-papers',
                   loadChildren: 'app/papers/papers.module#PapersModule',
                   data: {
+                    title: 'Papers 3',
                     assets: 'assets/more-papers'
                   }
                 }
@@ -109,16 +114,19 @@ describe('RoutePrepService', () => {
             {
               'url': '/',
               'component': 'Papers',
+              'title': 'Papers 1',
               'assets': 'assets/home'
             },
             {
               'url': '/papers',
               'component': 'Papers',
+              'title': 'Papers 2',
               'assets': 'assets/papers'
             },
             {
               'url': '/more-papers',
               'component': 'Papers',
+              'title': 'Papers 3',
               'assets': 'assets/more-papers'
             }
           ]
@@ -137,6 +145,7 @@ describe('RoutePrepService', () => {
                   path: '',
                   loadChildren: 'app/papers/papers.module#PapersModule',
                   data: {
+                    title: 'Papers 1',
                     assets: 'assets/home'
                   },
                 },
@@ -150,6 +159,7 @@ describe('RoutePrepService', () => {
             {
               'url': '/',
               'component': 'Papers',
+              'title': 'Papers 1',
               'assets': 'assets/home'
             },
             {
@@ -159,15 +169,18 @@ describe('RoutePrepService', () => {
             {
               'url': '/papers',
               'component': 'Papers',
+              'title': 'Papers 2',
             },
             {
               'url': '/more-papers',
-              'assets': 'assets/more-papers'
+              'assets': 'assets/more-papers',
+              'title': 'Papers 3',
             },
             {
               'url': '/more-papers-2',
               'component': 'Invalid',
-              'assets': 'assets/more-papers-2'
+              'assets': 'assets/more-papers-2',
+              'title': 'More Papers'
             }
           ]
         );

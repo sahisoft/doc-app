@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
 interface ISiteConfigEntry {
   readonly url: string;
   readonly component: string;
+  readonly title: string;
   readonly assets: string;
 }
 
@@ -55,13 +56,22 @@ export class RoutePrepService {
   }
 
   /**
+   * Static function to determine the title that should be loaded for a route,
+   * based on the string form of its name. If it could not be resolved, return null.
+   */
+  static resolveRouteTitle(title_str: string): string {
+
+    // Return the string verbatim - no special rules.
+    return title_str;
+  }
+
+  /**
    * Static function to determine the assets directory that should be loaded for a route,
    * based on the string form of the assets directory specified.
    */
   static resolveRouteAssets(assets_str: string): string {
 
-    // So far, there are no special validation rules for the assets folder - just return the string verbatim.
-    // We are making this function look like the others for consistency.
+    // Return the string verbatim - no special rules.
     return assets_str;
 
   }
@@ -91,6 +101,12 @@ export class RoutePrepService {
       return null;
     }
 
+    // Resolve the route title, fail if invalid.
+    const route_title = RoutePrepService.resolveRouteTitle(i_sc_entry.title);
+    if (route_title === null) {
+      return null;
+    }
+
     // Resolve the route assets folder, fail if invalid.
     const route_assets = RoutePrepService.resolveRouteAssets(i_sc_entry.assets);
     if (route_assets === null) {
@@ -101,6 +117,7 @@ export class RoutePrepService {
       path: route_url,
       loadChildren: route_component,
       data: {
+        title: route_title,
         assets: route_assets
       }
     };
@@ -132,6 +149,7 @@ export class RoutePrepService {
     });
 
     // We have figured out all the (valid) routes on the site - game time!
+    console.log('Routes are : ' + JSON.stringify(routes));
     return routes;
   }
 

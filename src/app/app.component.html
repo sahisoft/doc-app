@@ -1,1 +1,12 @@
+
+<mat-toolbar>
+
+  <ng-container *ngFor="let nav_item of nav_items">
+    <a class="mat-nav-list" routerLink="{{nav_item.url}}">
+      {{nav_item.title}}
+    </a>&nbsp;
+  </ng-container>
+
+</mat-toolbar>
+
 <router-outlet></router-outlet>
