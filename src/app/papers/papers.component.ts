@@ -16,6 +16,12 @@ import { TryMscLookup } from './utils/try-msc-lookup';
 export class PapersComponent implements OnInit {
 
   /**
+   * The route URL for this papers component
+   */
+  public routeUrl: string;
+
+
+  /**
    * The papers that will be shown in the UI
    */
   public papers: Array<Paper>;
@@ -36,6 +42,11 @@ export class PapersComponent implements OnInit {
       public mscLookupService: MscLookupService) { }
 
   ngOnInit() {
+
+
+    // Set route URL.
+    this.routeUrl = window.location.href;
+
     // Load papers.
     this.paperLoaderService.loadPapers().subscribe(
       papers => {

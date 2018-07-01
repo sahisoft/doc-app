@@ -3,22 +3,32 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 import { MscLookupService } from './msc-lookup.service';
-import { UrlConstants } from '../utils/url-constants';
+import { PaperUrlConstantsService } from './paper-url-constants.service';
+
+class PaperUrlConstantsServiceSpy {
+
+  static readonly MSC_REGISTRY = 'fake_msc.txt';
+
+  getMscRegistryUrl = jasmine.createSpy(
+    'getMscRegistryUrl').and.callFake(
+    () => PaperUrlConstantsServiceSpy.MSC_REGISTRY);
+}
 
 describe('MscLookupService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [MscLookupService]
-    });
+      providers: [MscLookupService,
+        {provide: PaperUrlConstantsService, useClass: PaperUrlConstantsServiceSpy}
+      ]});
   });
 
-  it('should load ' + UrlConstants.MSC_REGISTRY + ' upon startup',
+  it('should load ' + PaperUrlConstantsServiceSpy.MSC_REGISTRY + ' upon startup',
     inject( [MscLookupService, HttpTestingController],
       (service: MscLookupService, httpMock: HttpTestingController) => {
 
         expect(service).toBeTruthy();
-        httpMock.expectOne(UrlConstants.MSC_REGISTRY);
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.MSC_REGISTRY);
 
       }
     )
@@ -28,7 +38,7 @@ describe('MscLookupService', () => {
     inject([MscLookupService, HttpTestingController],
       (service: MscLookupService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(UrlConstants.MSC_REGISTRY)
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.MSC_REGISTRY)
           .flush(' key1 val1 is the value');
 
         expect(service.count()).toBe(1);
@@ -41,7 +51,7 @@ describe('MscLookupService', () => {
     inject([MscLookupService, HttpTestingController],
       (service: MscLookupService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(UrlConstants.MSC_REGISTRY)
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.MSC_REGISTRY)
           .flush(`key1 val1 for me\r\nkey2  val2 for  you\n key3\t val3 for\tthem\n`);
 
         expect(service.count()).toBe(3);
@@ -56,7 +66,7 @@ describe('MscLookupService', () => {
     inject([MscLookupService, HttpTestingController],
       (service: MscLookupService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(UrlConstants.MSC_REGISTRY)
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.MSC_REGISTRY)
           .flush('key1 val1\nkey1 val2');
 
         expect(service.count()).toBe(1);
@@ -69,7 +79,7 @@ describe('MscLookupService', () => {
     inject([MscLookupService, HttpTestingController],
       (service: MscLookupService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(UrlConstants.MSC_REGISTRY)
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.MSC_REGISTRY)
           .flush('key1 val1 [with some extra1]!\nkey2 (some extra2) val2 (really) is here\nkey3 val3 (extra3)\nkey4 val4 [extra] {extra}');
 
         expect(service.count()).toBe(4);
@@ -103,7 +113,7 @@ describe('MscLookupService', () => {
         'key3 (test3) val3',
         'key4 val4');
 
-        httpMock.expectOne(UrlConstants.MSC_REGISTRY)
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.MSC_REGISTRY)
           .flush(data.join('\n'));
 
         expect(service.count()).toBe(5);

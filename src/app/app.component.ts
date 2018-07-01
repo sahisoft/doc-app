@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
+import { RoutePrepService } from './site/services/route-prep.service';
 
 @Component({
   selector: 'app-main',
@@ -9,19 +10,13 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private router: Router ) { }
+  constructor(public router: Router, private routePrepService: RoutePrepService) { }
 
   ngOnInit() {
-    this.setStartingLocation();
-  }
 
-  /**
-   * Set the starting location for the site.
-   */
-  setStartingLocation() {
-    // For now, navigate to /papers to show that the routing is working properly.
-    // // There is nothing else interesting to show yet.
-    this.router.navigate(['papers']);
+    // Update route configuration based on what the route preparation
+    // service told us to do.
+    this.router.resetConfig(this.routePrepService.getRoutes());
   }
 
 }

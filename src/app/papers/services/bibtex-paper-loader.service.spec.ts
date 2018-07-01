@@ -3,15 +3,26 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { BibtexPaperLoaderService } from './bibtex-paper-loader.service';
-import { UrlConstants } from '../utils/url-constants';
+import { PaperUrlConstantsService } from './paper-url-constants.service';
+
+class PaperUrlConstantsServiceSpy {
+
+  static readonly PAPERS_BIB = 'fake_papers.bib';
+
+  getPapersBibUrl = jasmine.createSpy(
+    'getPapersBibUrl').and.callFake(
+    () => PaperUrlConstantsServiceSpy.PAPERS_BIB);
+
+}
 
 describe('BibtexPaperLoaderService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [BibtexPaperLoaderService]
-    });
+      providers: [BibtexPaperLoaderService,
+        {provide: PaperUrlConstantsService, useClass: PaperUrlConstantsServiceSpy}
+    ]});
   });
 
   it('should be created',
@@ -35,7 +46,7 @@ describe('BibtexPaperLoaderService', () => {
           }
         );
 
-        const request = httpMock.expectOne(UrlConstants.PAPERS_BIB);
+        const request = httpMock.expectOne(PaperUrlConstantsServiceSpy.PAPERS_BIB);
         request.error(new ErrorEvent('PAPER_LOAD_FAIL'));
       }
     )
@@ -51,7 +62,7 @@ describe('BibtexPaperLoaderService', () => {
           }
         );
 
-        const request = httpMock.expectOne(UrlConstants.PAPERS_BIB);
+        const request = httpMock.expectOne(PaperUrlConstantsServiceSpy.PAPERS_BIB);
         request.flush('\n');
       }
     )
@@ -77,7 +88,7 @@ describe('BibtexPaperLoaderService', () => {
           }
         );
 
-        const request = httpMock.expectOne(UrlConstants.PAPERS_BIB);
+        const request = httpMock.expectOne(PaperUrlConstantsServiceSpy.PAPERS_BIB);
         request.flush('@article {foo, RANDOM = {}}');
       }
     )
@@ -103,7 +114,7 @@ describe('BibtexPaperLoaderService', () => {
           }
         );
 
-        const request = httpMock.expectOne(UrlConstants.PAPERS_BIB);
+        const request = httpMock.expectOne(PaperUrlConstantsServiceSpy.PAPERS_BIB);
         request.flush(`@article {foo,
           AUTHOR = {},
           Abstract = {},
@@ -137,7 +148,7 @@ describe('BibtexPaperLoaderService', () => {
           }
         );
 
-        const request = httpMock.expectOne(UrlConstants.PAPERS_BIB);
+        const request = httpMock.expectOne(PaperUrlConstantsServiceSpy.PAPERS_BIB);
         request.flush(`@article {foo,
         author = {John Smith and Sally Smith},
         abstract = {This is my abstract},
@@ -179,7 +190,7 @@ describe('BibtexPaperLoaderService', () => {
           }
         );
 
-        const request = httpMock.expectOne(UrlConstants.PAPERS_BIB);
+        const request = httpMock.expectOne(PaperUrlConstantsServiceSpy.PAPERS_BIB);
         request.flush(`@article {foo,
         author = {John Smith and Sally Smith},
         abstract = {This is my first abstract},
@@ -212,7 +223,7 @@ describe('BibtexPaperLoaderService', () => {
           }
         );
 
-        const request = httpMock.expectOne(UrlConstants.PAPERS_BIB);
+        const request = httpMock.expectOne(PaperUrlConstantsServiceSpy.PAPERS_BIB);
         request.flush(`@article {foo,
           title={{L}ie superalgebra $\\mathfrak{q}(n)$}
         }`);

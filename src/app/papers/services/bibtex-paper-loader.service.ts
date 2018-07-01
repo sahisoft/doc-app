@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { Paper } from '../objects/paper';
-import { UrlConstants } from '../utils/url-constants';
+import { PaperUrlConstantsService } from '../services/paper-url-constants.service';
 
 @Injectable()
 /**
@@ -115,15 +115,17 @@ export class BibtexPaperLoaderService {
   /**
    * Prepare a BibtexPaperLoader.
    * @param {HttpClient} httpClient an HttpClient to use to make the request to load paper data
+   * @param {PaperUrlConstantsService} paperUrlConstants service exposing data URL's for this papers component
    */
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+    private paperUrlConstants: PaperUrlConstantsService) { }
 
   /**
    * Load the data from the given URL.
    * @return papers!
    */
   public loadPapers(): Observable<Array<Paper>> {
-    return this.httpClient.request('GET', UrlConstants.PAPERS_BIB, {responseType: 'text'})
+    return this.httpClient.request('GET', this.paperUrlConstants.getPapersBibUrl(), {responseType: 'text'})
       .map(data => BibtexPaperLoaderService.parse(data));
   }
 }

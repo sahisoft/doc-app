@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-import { UrlConstants } from '../utils/url-constants';
+import { PaperUrlConstantsService } from '../services/paper-url-constants.service';
 
 @Injectable()
 export class MscLookupService {
@@ -44,15 +44,17 @@ export class MscLookupService {
   /**
    * Prepare a MSC lookup service.
    * @param {HttpClient} httpClient an HttpClient with which to load data from the database
+   * @param {PaperUrlConstantsService} paperUrlConstants service exposing data URL's for this papers component
    */
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+      private paperUrlConstants: PaperUrlConstantsService) {
 
     // Start out not ready.
     this.ready = new BehaviorSubject<boolean>(false);
 
     this.mscDescMap = new Map<string, string>();
 
-    this.httpClient.request('GET', UrlConstants.MSC_REGISTRY, {responseType: 'text'})
+    this.httpClient.request('GET', paperUrlConstants.getMscRegistryUrl(), {responseType: 'text'})
       .map((result: string) => result
         .replace(new RegExp('\\\\[^\\n]*({[^}]*})', 'g'), '') // eliminate headers
         .split(new RegExp('[\\r?\\n]+'))) // split on each remaining line

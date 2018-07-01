@@ -1,21 +1,41 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule} from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { PapersModule } from './papers/papers.module';
-import { PapersComponent } from './papers/papers.component';
+import { RoutePrepService } from './site/services/route-prep.service';
+
+export function RouteInitFactory(routePrepService: RoutePrepService) {
+  return () => routePrepService.load();
+}
 
 @NgModule({
   imports: [
+    BrowserModule,
     CommonModule,
+    HttpClientModule,
+    // initial route configuration for compilation to work correctly,
+    // but can be overriden by the RoutePrepService!
     RouterModule.forRoot([
-      { path: 'papers', component: PapersComponent }
-    ]),
-    PapersModule,
+      {
+        path: 'papers',
+        loadChildren: 'app/papers/papers.module#PapersModule',
+      }
+    ]), // will be dynamically filled in
   ],
   declarations: [
     AppComponent
+  ],
+  providers: [
+    RoutePrepService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: RouteInitFactory,
+      deps: [RoutePrepService],
+      multi: true
+    }
   ],
   bootstrap: [
     AppComponent

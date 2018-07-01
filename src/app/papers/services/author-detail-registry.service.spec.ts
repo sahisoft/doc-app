@@ -4,23 +4,32 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { AuthorDetailRegistryService } from './author-detail-registry.service';
 import { AuthorDetail } from '../objects/author-detail';
+import { PaperUrlConstantsService } from './paper-url-constants.service';
 
-import { UrlConstants } from '../utils/url-constants';
+class PaperUrlConstantsServiceSpy {
+
+  static readonly AUTHOR_REGISTRY = 'fake_authors.json';
+
+  getAuthorRegistryUrl = jasmine.createSpy(
+      'getAuthorRegistryUrl').and.callFake(
+    () => PaperUrlConstantsServiceSpy.AUTHOR_REGISTRY);
+}
 
 describe('AuthorDetailRegistryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AuthorDetailRegistryService]
-    });
+      providers: [AuthorDetailRegistryService,
+        {provide: PaperUrlConstantsService, useClass: PaperUrlConstantsServiceSpy}
+      ]});
   });
 
-  it('should load ' + UrlConstants.AUTHOR_REGISTRY + ' upon startup',
+  it('should load ' + PaperUrlConstantsServiceSpy.AUTHOR_REGISTRY + ' upon startup',
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
         expect(service).toBeTruthy();
-        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY);
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.AUTHOR_REGISTRY);
       }
     )
   );
@@ -29,7 +38,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-          httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY)
+          httpMock.expectOne(PaperUrlConstantsServiceSpy.AUTHOR_REGISTRY)
             .flush('badResponse');
 
           expect(service.getAuthorDetails()).toEqual([]);
@@ -41,7 +50,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-          httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY)
+          httpMock.expectOne(PaperUrlConstantsServiceSpy.AUTHOR_REGISTRY)
             .flush([]);
 
           expect(service.getAuthorDetails()).toEqual([]);
@@ -53,7 +62,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY)
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.AUTHOR_REGISTRY)
           .flush(
             [{
               'cite': 'Smith, John',
@@ -80,7 +89,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY).
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.AUTHOR_REGISTRY).
           flush(
             [
               {'show': 'Bad Author 1'},
@@ -114,7 +123,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY).flush(
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.AUTHOR_REGISTRY).flush(
           [{
             'cite': 'Smith, John',
             'show': 'John Smith',
@@ -140,7 +149,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY).flush(
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.AUTHOR_REGISTRY).flush(
           [{
             'cite': 'Smith, John',
             'show': 'John Smith',
@@ -176,7 +185,7 @@ describe('AuthorDetailRegistryService', () => {
     inject([AuthorDetailRegistryService, HttpTestingController],
       (service: AuthorDetailRegistryService, httpMock: HttpTestingController) => {
 
-        httpMock.expectOne(UrlConstants.AUTHOR_REGISTRY).flush(
+        httpMock.expectOne(PaperUrlConstantsServiceSpy.AUTHOR_REGISTRY).flush(
           [{
             'cite': 'Smith, John',
             'show': 'John Smith',

@@ -14,7 +14,7 @@
                 <td>{{ description }}</td>
                 <td>
                   <span *ngFor="let paper of indexPapersByClass.getPapersForDescription(description)">
-                    <a class="paper-list-link" href="papers#{{paper.id}}">#{{paper.id}}</a>&nbsp;
+                    <a class="paper-list-link" href="{{routeUrl}}#{{paper.id}}">#{{paper.id}}</a>&nbsp;
                   </span>
                 </td>
               </tr>
@@ -31,7 +31,7 @@
     <mat-list class="paper-list">
       <ng-container *ngFor="let paper of papers">
         <mat-list-item class="paper-list-item">
-          <a class="paper-list-link" href="papers#{{paper.id}}" appRenderTex [text]="paper.title"></a>
+          <a class="paper-list-link" href="{{routeUrl}}#{{paper.id}}" appRenderTex [text]="paper.title"></a>
         </mat-list-item>
       </ng-container>
     </mat-list><br/>

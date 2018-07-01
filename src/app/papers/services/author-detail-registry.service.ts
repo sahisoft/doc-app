@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 import { AuthorDetail } from '../objects/author-detail';
-import { UrlConstants } from '../utils/url-constants';
+import { PaperUrlConstantsService } from '../services/paper-url-constants.service';
 
 // This is a blueprint for parsing entries within the AUTHOR_REGISTRY_URL.
 // We expect to see the fields listed below, in a valid author entry.
@@ -84,13 +84,15 @@ export class AuthorDetailRegistryService {
   /**
    * Prepare an author registry lookup service.
    * @param {HttpClient} httpClient an HttpClient with which to lookup and parse the author registry
+   * @param {PaperUrlConstantsService} paperUrlConstants service exposing data URL's for this papers component
    */
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+      private paperUrlConstants: PaperUrlConstantsService) {
 
     // Start with empty values while waiting for a request.
     this.initAsEmpty();
 
-    this.httpClient.request<IAuthorDetail[]>('GET', UrlConstants.AUTHOR_REGISTRY)
+    this.httpClient.request<IAuthorDetail[]>('GET', paperUrlConstants.getAuthorRegistryUrl())
       .subscribe((i_author_details: IAuthorDetail[]) => {
         this.asyncInit(i_author_details);
       }
