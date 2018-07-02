@@ -2,78 +2,56 @@
   width: 100%;
 }
 
-.paper-div {
-  width: 70%;
+.left-div {
+  border: 1em;
+  padding: 1em;
+  width: 60%;
   float: left;
 }
 
-.paper-by-class-index {
+.left-card {
   margin: auto;
-  width: 50%;
   border: 0;
   padding: 0;
 }
 
-.paper-by-class-item {
-  border: 0;
-  padding: 0;
+.left-card-title {
+  padding: 0.25em;
 }
 
-.paper-list {
+.left-card-content {
+  border: 0.1em;
+  padding: 0.5em;
+}
+
+.right-div {
+  border: 1em;
+  padding: 1em;
+  width: 33%;
+  float: right;
+}
+
+.right-card {
   margin: auto;
-  width: 50%;
   border: 0;
   padding: 0;
 }
 
-.paper-list-item {
-  border: 0;
-  padding: 0;
+.right-card-title {
+  padding: 0.25em;
 }
 
-.paper-list-link {
-  text-decoration: none;
+.right-card-content {
+  border: 0.05em;
+  padding: 0.25em;
 }
 
-.paper-list-link:hover {
-  text-decoration: underline;
+.mat-list {
+  border: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
-.paper-card {
-  margin: auto;
-  width: 50%;
-  border: 0;
-  padding: 0;
-}
-
-.paper-card-title {
-  border: 0;
-  padding: 3px;
-}
-
-.paper-card-subtitle {
-  border: 0;
-  padding: 3px;
-}
-
-.paper-card-content {
-  border: 3px;
-  padding: 10px;
-}
-
-.collaborator-div {
-  width: 30%;
-  float: left;
-}
-
-.collaborator-list {
-  margin: auto;
-  width: 50%;
-  border: 0;
-  padding: 0;
-}
-
-.collaborator-list-item {
-  border: 0;
-  padding: 0;
+.mat-list-item {
+  height: auto !important;
 }

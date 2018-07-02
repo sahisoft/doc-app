@@ -6,8 +6,8 @@
 
 @include mat-core();
 
-$site-app-primary: mat-palette($mat-deep-orange);
-$site-app-accent:  mat-palette($mat-lime, A200, A100, A400);
+$site-app-primary: mat-palette($mat-blue);
+$site-app-accent:  mat-palette($mat-purple);
 $site-app-warn:    mat-palette($mat-red);
 $site-app-theme:   mat-dark-theme($site-app-primary, $site-app-accent, $site-app-warn);
 
@@ -16,15 +16,19 @@ $site-app-theme:   mat-dark-theme($site-app-primary, $site-app-accent, $site-app
 
 // Apply styling rules for the rest of the site.
 body {
-  background-color: mat-color($mat-light-blue, 900);
+  background-color: #cccccc;
 }
 
 .mat-card-title {
-  background-color: mat-color($site-app-primary, 900);
+  background-color: #324a44;
 }
 
-.mat-list {
-  background-color: mat-color($mat-grey, 800);
+.mat-list, .mat-card, .mat-card-content {
+  background-color: #4d5266;
+}
+
+.mat-list-item {
+  height: auto;
 }
 
 a {

@@ -1,89 +1,104 @@
 <div class="all-content-div">
 
-  <div class="paper-div">
+  <div class="left-div">
 
-    <!-- Index-level view of papers by class -->
-    <mat-list class="paper-by-class-index">
-
-      <ng-container *ngIf="indexPapersByClass.isReady() | async">
-
-        <ng-container *ngFor="let description of indexPapersByClass.getSortedDescriptions()">
-          <mat-list-item class="paper-by-class-item">
-            <table>
-              <tr>
-                <td>{{ description }}</td>
-                <td>
-                  <span *ngFor="let paper of indexPapersByClass.getPapersForDescription(description)">
-                    <a class="paper-list-link" href="{{routeUrl}}#{{paper.id}}">#{{paper.id}}</a>&nbsp;
-                  </span>
-                </td>
-              </tr>
-            </table>
-          </mat-list-item>
-        </ng-container>
-
-      </ng-container>
-
-    </mat-list><br/>
-
-    <!-- High-level listing of all papers, showing only title.
-    Each item will be linked to its respective card below. -->
-    <mat-list class="paper-list">
-      <ng-container *ngFor="let paper of papers">
-        <mat-list-item class="paper-list-item">
-          <a class="paper-list-link" href="{{routeUrl}}#{{paper.id}}" appRenderTex [text]="paper.title"></a>
-        </mat-list-item>
-      </ng-container>
-    </mat-list><br/>
-
-    <!-- Details about each individual paper -->
+    <!-- Details about each individual paper, on the left side of the page -->
     <ng-container *ngFor="let paper of papers">
-      <mat-card class="paper-card" id="{{paper.id}}">
+      <mat-card class="left-card" id="{{paper.id}}">
 
-        <mat-card-title class="paper-card-title">
+        <mat-card-title class="left-card-title">
           <span>
-            <a *ngIf="paper.url" href="{{paper.url}}" style="text-decoration: none">
-              <img src="../../assets/icons/ic_cloud_download_white_18px.svg" />
-            </a>
-            <span appRenderTex [text]="paper.title"></span>
+            #{{paper.id}}: <span appRenderTex [text]="paper.title"></span>
           </span>
         </mat-card-title>
 
-        <mat-card-content class="paper-card-content">
+        <mat-card-content class="left-card-content">
 
-          <ng-container *ngIf="authorDetailRegistryService.isReady() | async">
-            <span appRenderByline [paper]="paper"></span><br/>
-          </ng-container>
+          <div>
+            <div>
 
-
-          <ng-container *ngIf="tryMscLookup.try(paper.mrclass)">
-            <b>Classifications:</b>
-            <ul *ngFor="let mscVal of tryMscLookup.get()">
-              <li>
-                <span appRenderTex [text]="mscVal"></span>
-              </li>
-            </ul><br/>
-          </ng-container>
+              <ng-container *ngIf="paper.url">
+                <span>
+                  <a href="{{paper.url}}" style="text-decoration: none">
+                    <img src="../../assets/icons/ic_cloud_download_white_18px.svg" />
+                  </a>&nbsp;
+                  <a href="{{paper.url}}">Download</a>
+                </span><br/><br/>
+              </ng-container>
 
 
-          <ng-container *ngIf="paper.abstractText">
-            <span appRenderTex [text]="paper.abstractText"></span><br/>
-          </ng-container>
+              <ng-container *ngIf="authorDetailRegistryService.isReady() | async">
+                <span appRenderByline [paper]="paper"></span><br/>
+              </ng-container>
+
+              <ng-container *ngIf="paper.abstractText">
+                <span appRenderTex [text]="paper.abstractText"></span><br/>
+              </ng-container>
+            </div>
+
+            <div>
+              <mat-list *ngIf="tryMscLookup.try(paper.mrclass)">
+                <h3 matLine>Categories</h3>
+                <ng-container *ngFor="let mscVal of tryMscLookup.get()">
+                  <mat-list-item>
+                      <span appRenderTex [text]="mscVal"></span>
+                  </mat-list-item>
+                </ng-container>
+              </mat-list>
+            </div>
+          </div>
 
         </mat-card-content>
       </mat-card><br/>
     </ng-container>
   </div>
 
-  <!-- Show a list of the collaborators. -->
-  <div class="collaborator-div">
-    <mat-list class="collaborator-list">
-      <ng-container *ngFor="let authorDetail of authorDetailRegistryService.getAuthorDetails()">
-        <mat-list-item class="collaborator-list-item" *ngIf="authorDetail.authorType === authorDetail.Type.Collaborator">
-          <a href="{{authorDetail.websiteUrl}}">{{authorDetail.printStyle}}</a>
-        </mat-list-item>
-      </ng-container>
-    </mat-list>
+  <!-- Collaborators and categories, on the right side of the page. -->
+  <div class="right-div">
+
+    <mat-card class="right-card">
+
+      <mat-card-title class="right-card-title">Collaborators</mat-card-title>
+      <mat-card-content class="right-card-content">
+        <mat-list>
+          <ng-container *ngFor="let authorDetail of authorDetailRegistryService.getAuthorDetails()">
+            <mat-list-item *ngIf="authorDetail.authorType === authorDetail.Type.Collaborator">
+              <a href="{{authorDetail.websiteUrl}}">{{authorDetail.printStyle}}</a>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          </ng-container>
+        </mat-list>
+      </mat-card-content>
+
+    </mat-card>
+    <br/>
+
+    <!-- Index-level view of papers by class -->
+    <mat-card class="right-card">
+
+      <mat-card-title class="right-card-title">Categories</mat-card-title>
+      <mat-card-content class="right-card-content">
+        <mat-list>
+
+          <ng-container *ngIf="indexPapersByClass.isReady() | async">
+
+            <ng-container *ngFor="let description of indexPapersByClass.getSortedDescriptions()">
+              <mat-list-item>
+                <div>
+                  <span>{{ description }}</span><br/>
+                  <span *ngFor="let paper of indexPapersByClass.getPapersForDescription(description)">
+                    <a href="{{routeUrl}}#{{paper.id}}">#{{paper.id}}</a>&nbsp;
+                  </span>
+                </div><br/>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </ng-container>
+
+          </ng-container>
+        </mat-list>
+      </mat-card-content>
+    </mat-card><br/>
+
   </div>
 
 </div>
