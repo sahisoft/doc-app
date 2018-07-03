@@ -1,0 +1,13 @@
+
+.toolbar-div {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding-bottom: 1em;
+  border-bottom: 1em;
+}
+
+.main-div {
+  margin-top: 4%;
+}

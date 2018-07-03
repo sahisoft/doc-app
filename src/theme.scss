@@ -6,8 +6,8 @@
 
 @include mat-core();
 
-$site-app-primary: mat-palette($mat-blue);
-$site-app-accent:  mat-palette($mat-purple);
+$site-app-primary: mat-palette($mat-blue-grey, 900);
+$site-app-accent:  mat-palette($mat-purple, 900);
 $site-app-warn:    mat-palette($mat-red);
 $site-app-theme:   mat-dark-theme($site-app-primary, $site-app-accent, $site-app-warn);
 
@@ -23,12 +23,12 @@ body {
   background-color: #324a44;
 }
 
-.mat-list, .mat-card, .mat-card-content {
+.mat-card {
   background-color: #4d5266;
 }
 
-.mat-list-item {
-  height: auto;
+body {
+  margin: 0;
 }
 
 a {

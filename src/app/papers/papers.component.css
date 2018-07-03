@@ -1,5 +1,7 @@
 .all-content-div {
   width: 100%;
+  display: inline-flex;
+  flex-wrap: nowrap;
 }
 
 .left-div {
