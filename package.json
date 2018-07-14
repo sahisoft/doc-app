@@ -1,6 +1,6 @@
 {
-  "name": "bibtex-doc-site",
-  "version": "0.0.0",
+  "name": "professor-homepage",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
