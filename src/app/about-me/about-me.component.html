@@ -1,0 +1,54 @@
+<div class="content-div" *ngIf="aboutMeConfig">
+
+  <div class="center-card-div">
+    <mat-card class="center-card">
+      <mat-card-content class="center-card-content">
+
+        <div>
+          <div class="picture-div" *ngIf="aboutMeConfig.pictureUrl">
+            <img src="{{aboutMeConfig.pictureUrl}}" />
+          </div>
+
+          <div class="name-and-resume-div" *ngIf="aboutMeConfig.name || aboutMeConfig.resumeUrl">
+            <ng-container *ngIf="aboutMeConfig.name">
+                <p class="name-text">{{aboutMeConfig.name}}</p>
+            </ng-container>
+            <ng-container *ngIf="aboutMeConfig.resumeUrl">
+              <a href="{{aboutMeConfig.resumeUrl}}" style="text-decoration: none">
+                <img src="../../assets/icons/ic_cloud_download_white_18px.svg" />
+              </a>
+              <a href="{{aboutMeConfig.resumeUrl}}">Resume</a>
+            </ng-container>
+          </div>
+        </div><br/>
+
+        <ng-container *ngIf="aboutMeConfig.emailAddress">
+          <span>
+            <a href="mailto:{{aboutMeConfig.emailAddress}}">{{aboutMeConfig.emailAddress}}</a>
+          </span><br/>
+        </ng-container>
+
+        <ng-container *ngIf="aboutMeConfig.snailMailAddress">
+          <span>
+            {{aboutMeConfig.snailMailAddress}}
+          </span><br/>
+        </ng-container>
+
+        <ng-container *ngIf="aboutMeConfig.phoneNumber">
+          <span>
+            {{aboutMeConfig.phoneNumber}}
+          </span><br/>
+        </ng-container>
+
+        <ng-container *ngIf="aboutMeConfig.aboutMeText">
+          <br/>
+          <span *ngIf="aboutMeConfig.aboutMeText">
+            {{aboutMeConfig.aboutMeText}}
+          </span>
+        </ng-container>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

@@ -82,10 +82,10 @@ describe('RoutePrepService', () => {
             expect(service.getRoutes()).toEqual([
                 {
                   path: '',
-                  loadChildren: 'app/papers/papers.module#PapersModule',
+                  loadChildren: 'app/about-me/about-me.module#AboutMeModule',
                   data: {
-                    title: 'Papers 1',
-                    assets: 'assets/home'
+                    title: 'About Me',
+                    assets: 'assets/about-me'
                   },
                 },
                 {
@@ -113,9 +113,9 @@ describe('RoutePrepService', () => {
           [
             {
               'url': '/',
-              'component': 'Papers',
-              'title': 'Papers 1',
-              'assets': 'assets/home'
+              'component': 'AboutMe',
+              'title': 'About Me',
+              'assets': 'assets/about-me'
             },
             {
               'url': '/papers',
@@ -167,9 +167,9 @@ describe('RoutePrepService', () => {
               'assets': 'assets/papers'
             },
             {
-              'url': '/papers',
-              'component': 'Papers',
-              'title': 'Papers 2',
+              'url': '/about-me',
+              'component': 'AboutMe',
+              'title': 'About Me',
             },
             {
               'url': '/more-papers',

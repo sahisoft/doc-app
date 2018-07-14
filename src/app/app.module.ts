@@ -23,8 +23,12 @@ export function RouteInitFactory(routePrepService: RoutePrepService) {
     // but can be overriden by the RoutePrepService!
     RouterModule.forRoot([
       {
+        path: 'about-me',
+        loadChildren: 'app/about-me/about-me.module#AboutMeModule'
+      },
+      {
         path: 'papers',
-        loadChildren: 'app/papers/papers.module#PapersModule',
+        loadChildren: 'app/papers/papers.module#PapersModule'
       }
     ]), // will be dynamically filled in
   ],

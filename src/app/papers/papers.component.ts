@@ -20,7 +20,6 @@ export class PapersComponent implements OnInit {
    */
   public routeUrl: string;
 
-
   /**
    * The papers that will be shown in the UI
    */

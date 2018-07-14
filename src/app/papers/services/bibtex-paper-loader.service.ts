@@ -121,7 +121,7 @@ export class BibtexPaperLoaderService {
     private paperUrlConstants: PaperUrlConstantsService) { }
 
   /**
-   * Load the data from the given URL.
+   * Load the data from the configured URL.
    * @return papers!
    */
   public loadPapers(): Observable<Array<Paper>> {

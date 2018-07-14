@@ -1,0 +1,41 @@
+.content-div {
+  width: 100%;
+  display: inline-flex;
+  flex-wrap: nowrap;
+}
+
+.center-card-div {
+  position: absolute;
+  top: 25%;
+  left: 30%;
+  width: 40%;
+}
+
+.center-card {
+  margin: auto;
+  border: 0;
+  padding: 0;
+}
+
+.center-card-content {
+  border: 0.1em;
+  padding: 0.5em;
+  overflow-wrap: break-word;
+}
+
+.picture-div {
+  display: inline-block;
+}
+
+.name-text {
+  font-size: large;
+}
+
+.name-and-resume-div {
+  display: inline-block;
+  vertical-align: center;
+  margin: auto;
+  position: absolute;
+  left: 50%;
+  top: 10%;
+}

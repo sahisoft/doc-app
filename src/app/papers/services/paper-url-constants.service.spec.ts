@@ -1,8 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 
-
-
 import { PaperUrlConstantsService } from './paper-url-constants.service';
 
 describe('PaperUrlConstantsService', () => {

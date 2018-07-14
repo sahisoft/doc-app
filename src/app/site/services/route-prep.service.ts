@@ -47,6 +47,9 @@ export class RoutePrepService {
   static resolveRouteComponent(component_str: string): any {
 
     switch (component_str) {
+      case 'AboutMe': {
+        return 'app/about-me/about-me.module#AboutMeModule';
+      }
       case 'Papers': {
         return 'app/papers/papers.module#PapersModule';
       }
@@ -149,7 +152,6 @@ export class RoutePrepService {
     });
 
     // We have figured out all the (valid) routes on the site - game time!
-    console.log('Routes are : ' + JSON.stringify(routes));
     return routes;
   }
 

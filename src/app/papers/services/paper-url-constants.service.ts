@@ -22,7 +22,7 @@ export class PaperUrlConstantsService {
   /**
    * Assets folder under which to find the files above
    */
-  private assetsDir: string;
+  private readonly assetsDir: string;
 
   /**
    * Exposes data URL's needed by papers services, relative to the specified assets folder.
